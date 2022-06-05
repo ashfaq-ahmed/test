@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  server: 
+    volumes:
+      - ./server:/app:ro
+      - /app/node_modules
+    environment: 
+      - NODE_ENV=production
+    command: node ./bin/www
+
+  client:
+    build: 
+      context: ./client
+      dockerfile: DockerfileDev
+    ports:
+      - 4200:4200
+    command: npm start

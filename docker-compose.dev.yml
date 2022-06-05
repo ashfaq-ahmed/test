@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  server: 
+    volumes:
+      - ./server:/app:ro
+      - /app/node_modules
+    environment: 
+      - NODE_ENV=development
+    command: npm run dev
+
+  client:
+    build: 
+      context: ./client
+      dockerfile: DockerFileDev
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - 4200:4200
+      - 49153:49153
+    command: npm start -- --host 0.0.0.0 --poll 3000
